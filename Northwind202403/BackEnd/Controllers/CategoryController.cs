@@ -28,9 +28,9 @@ namespace BackEnd.Controllers
 
         // GET api/<CategoryController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Category Get(int id)
         {
-            return "value";
+            return categoryService.Obtener(id);
         }
 
         // POST api/<CategoryController>
