@@ -39,5 +39,26 @@ namespace FrontEnd.Helpers.Implementations
             return resultado;
 
         }
+
+        public CategoryViewModel GetCategory(int id)
+        {
+            HttpResponseMessage responseMessage = _ServiceRepository.GetResponse("api/Category/" + id.ToString());
+            Category category = new Category();
+            if (responseMessage != null)
+            {
+                var content = responseMessage.Content.ReadAsStringAsync().Result;
+                category = JsonConvert.DeserializeObject<Category>(content);
+            }
+
+            CategoryViewModel resultado =
+                            new CategoryViewModel
+                            {
+                                CategoryId = category.CategoryId,
+                                CategoryName = category.CategoryName
+                            };
+                    
+            
+            return resultado;
+        }
     }
 }
