@@ -1,24 +1,25 @@
-﻿using Entities.Entities;
+﻿using BackEnd.DTO;
+
 
 namespace BackEnd.Services.Interfaces
 {
     public interface ICategoryService
     {
 
-        bool Agregar(Category category);
-        bool Editar(Category category);
-        bool Eliminar(Category category);
+        bool Agregar(CategoryDTO category);
+        bool Editar(CategoryDTO category);
+        bool Eliminar(CategoryDTO category);
         /// <summary>
         /// Obtiene Category por Id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Category Obtener(int id);
+        CategoryDTO Obtener(int id);
         
         /// <summary>
         /// Obtiene todas la categories
         /// </summary>
         /// <returns></returns>
-        List<Category> Obtener();
+        List<CategoryDTO> Obtener();
     }
 }

@@ -1,4 +1,5 @@
-﻿using BackEnd.Services.Interfaces;
+﻿using BackEnd.DTO;
+using BackEnd.Services.Interfaces;
 using DAL.Interfaces;
 using Entities.Entities;
 
@@ -12,34 +13,68 @@ namespace BackEnd.Services.Implementations
         {
             this.Unidad = unidadDeTrabajo;
         }
-
-
-        public bool Agregar(Category category)
+        #region Convertir
+        Category Convertir (CategoryDTO category)
         {
-           Unidad.CategoryDAL.Add(category);
+            return new Category
+            {
+                CategoryId = category.CategoryId,
+                CategoryName = category.CategoryName
+            };
+        }
+
+
+        CategoryDTO Convertir(Category category)
+        {
+            return new CategoryDTO
+            {
+                CategoryId = category.CategoryId,
+                CategoryName = category.CategoryName
+            };
+        }
+
+        #endregion
+     
+        
+        
+        public bool Agregar(CategoryDTO category)
+        {
+
+            Category entity = Convertir(category);
+           Unidad.CategoryDAL.Add(entity);
             return Unidad.Complete();
         }
 
-        public bool Editar(Category category)
+        public bool Editar(CategoryDTO category)
         {
-            Unidad.CategoryDAL.Update(category);
+            var entity = Convertir(category);
+            Unidad.CategoryDAL.Update(entity);
             return Unidad.Complete();   
         }
 
-        public bool Eliminar(Category category)
+        public bool Eliminar(CategoryDTO category)
         {
-            Unidad.CategoryDAL.Remove(category);
+            
+            Unidad.CategoryDAL.Remove(Convertir(category));
             return Unidad.Complete();
         }
 
-        public Category Obtener(int id)
+        public CategoryDTO Obtener(int id)
         {
-            return Unidad.CategoryDAL.Get(id);
+            return  Convertir(Unidad.CategoryDAL.Get(id));
         }
 
-        public List<Category> Obtener()
+        public List<CategoryDTO> Obtener()
         {
-            return Unidad.CategoryDAL.GetAll().ToList(); 
+            List<CategoryDTO > list = new List<CategoryDTO>();
+            var categories = Unidad.CategoryDAL.GetAll().ToList();
+
+            foreach (var item in categories)
+            {
+                list.Add(Convertir(item));
+            }
+
+            return list; 
         }
     }
 }
