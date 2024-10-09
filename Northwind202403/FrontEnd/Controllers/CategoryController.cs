@@ -54,16 +54,20 @@ namespace FrontEnd.Controllers
         // GET: CategoryController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var category = _categoryHelper.GetCategory(id);
+
+            return View(category);
         }
 
         // POST: CategoryController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(CategoryViewModel category)
         {
             try
             {
+                _categoryHelper.Update(category
+                    );
                 return RedirectToAction(nameof(Index));
             }
             catch
