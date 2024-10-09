@@ -1,4 +1,6 @@
-﻿using FrontEnd.Helpers.Interfaces;
+﻿using FrontEnd.Helpers.Implementations;
+using FrontEnd.Helpers.Interfaces;
+using FrontEnd.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,10 +37,12 @@ namespace FrontEnd.Controllers
         // POST: CategoryController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(CategoryViewModel    category)
         {
             try
             {
+                _categoryHelper.Add(category);
+
                 return RedirectToAction(nameof(Index));
             }
             catch

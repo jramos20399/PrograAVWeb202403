@@ -10,9 +10,34 @@ namespace FrontEnd.Helpers.Implementations
     {
         IServiceRepository _ServiceRepository;
 
+        Category Convertir(CategoryViewModel category)
+        {
+            return new Category
+            {
+                CategoryId = category.CategoryId,
+                CategoryName = category.CategoryName
+            };
+        }
+
+
         public CategoryHelper(IServiceRepository serviceRepository)
         {
                 _ServiceRepository = serviceRepository;
+        }
+
+        public CategoryViewModel Add(CategoryViewModel category)
+        {
+            HttpResponseMessage response = _ServiceRepository.PostResponse("api/Category", Convertir(category));
+            if (response.IsSuccessStatusCode) { 
+            
+            var content = response.Content.ReadAsStringAsync().Result;
+            }
+            return category;
+        }
+
+        public CategoryViewModel Delete(int id)
+        {
+            throw new NotImplementedException();
         }
 
         public List<CategoryViewModel> GetCategories()
@@ -59,6 +84,11 @@ namespace FrontEnd.Helpers.Implementations
                     
             
             return resultado;
+        }
+
+        public CategoryViewModel Update(CategoryViewModel category)
+        {
+            throw new NotImplementedException();
         }
     }
 }
