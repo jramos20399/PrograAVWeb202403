@@ -35,9 +35,13 @@ namespace FrontEnd.Helpers.Implementations
             return category;
         }
 
-        public CategoryViewModel Delete(int id)
+        public void Delete(int id)
         {
-            throw new NotImplementedException();
+            HttpResponseMessage responseMessage = _ServiceRepository.DeleteResponse("api/Category/" + id.ToString());
+            if (responseMessage.IsSuccessStatusCode) { var content = responseMessage.Content; }
+
+
+
         }
 
         public List<CategoryViewModel> GetCategories()
