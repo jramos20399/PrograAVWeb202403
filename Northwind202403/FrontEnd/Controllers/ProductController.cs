@@ -66,16 +66,24 @@ namespace FrontEnd.Controllers
         // GET: ProductController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            ProductViewModel product = new ProductViewModel();
+
+            product= _productHelper.GetById(id);
+            product.Suppliers = _supplierHelper.GetAll();
+            product.Categories = _categoryHelper.GetCategories();
+
+
+            return View(product);
         }
 
         // POST: ProductController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(ProductViewModel product)
         {
             try
             {
+                _productHelper.EdiProduct(product);
                 return RedirectToAction(nameof(Index));
             }
             catch

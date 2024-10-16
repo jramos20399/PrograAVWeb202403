@@ -104,7 +104,7 @@ namespace FrontEnd.Helpers.Implementations
         public ProductViewModel GetById(int id)
         {
             Product product = new Product();
-            HttpResponseMessage responseMessage = _repository.GetResponse("api/product");
+            HttpResponseMessage responseMessage = _repository.GetResponse("api/product/"+ id.ToString());
 
 
             if (responseMessage != null)
