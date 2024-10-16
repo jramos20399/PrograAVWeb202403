@@ -50,12 +50,18 @@ namespace BackEnd.Services.Implementations
 
         public SupplierDTO Get(int id)
         {
-            throw new NotImplementedException();
+            var result = _Unidad.SupplierDAL.Get(id);
+            return Convertir(result);
         }
 
         public List<SupplierDTO> Get()
         {
-            throw new NotImplementedException();
+            var result = _Unidad.SupplierDAL.GetAll();
+            List<SupplierDTO> list = new List<SupplierDTO>();
+            foreach (var item in result) {
+                list.Add(Convertir(item));
+            }
+            return list;
         }
 
         public SupplierDTO Update(SupplierDTO supplier)
