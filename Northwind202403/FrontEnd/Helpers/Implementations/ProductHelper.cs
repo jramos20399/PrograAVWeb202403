@@ -21,7 +21,7 @@ namespace FrontEnd.Helpers.Implementations
                 ProductId = product.ProductId,
                 ProductName = product.ProductName,
                 SupplierId = product.SupplierId,
-                CategoryId = product.CategoryId,
+                CategoryId = (int) product.CategoryId,
                 Discontinued = product.Discontinued
             };
         }

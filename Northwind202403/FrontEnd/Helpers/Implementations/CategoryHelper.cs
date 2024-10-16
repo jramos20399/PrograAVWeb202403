@@ -69,7 +69,7 @@ namespace FrontEnd.Helpers.Implementations
 
         }
 
-        public CategoryViewModel GetCategory(int id)
+        public CategoryViewModel GetCategory(int? id)
         {
             HttpResponseMessage responseMessage = _ServiceRepository.GetResponse("api/Category/" + id.ToString());
             Category category = new Category();

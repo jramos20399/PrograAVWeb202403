@@ -6,7 +6,7 @@ namespace FrontEnd.Helpers.Interfaces
     {
         List<CategoryViewModel> GetCategories();
 
-        CategoryViewModel GetCategory(int id);  
+        CategoryViewModel GetCategory(int? id);  
         CategoryViewModel Add(CategoryViewModel category);
         CategoryViewModel Update(CategoryViewModel category);
         void Delete(int id);
