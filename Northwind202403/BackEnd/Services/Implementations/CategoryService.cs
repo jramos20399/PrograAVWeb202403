@@ -8,10 +8,12 @@ namespace BackEnd.Services.Implementations
     public class CategoryService : ICategoryService
     {
         IUnidadDeTrabajo Unidad;
+        ILogger<CategoryService> _logger;    
 
-        public CategoryService(IUnidadDeTrabajo unidadDeTrabajo)
+        public CategoryService(IUnidadDeTrabajo unidadDeTrabajo, ILogger<CategoryService> logger)
         {
             this.Unidad = unidadDeTrabajo;
+            _logger = logger;   
         }
         #region Convertir
         Category Convertir (CategoryDTO category)
@@ -66,15 +68,25 @@ namespace BackEnd.Services.Implementations
 
         public List<CategoryDTO> Obtener()
         {
-            List<CategoryDTO > list = new List<CategoryDTO>();
-            var categories = Unidad.CategoryDAL.GetAll().ToList();
-
-            foreach (var item in categories)
+            try
             {
-                list.Add(Convertir(item));
-            }
+                _logger.LogInformation("Ingresa a Obtener CatService");
+                List<CategoryDTO> list = new List<CategoryDTO>();
+                var categories = Unidad.CategoryDAL.GetAll().ToList();
 
-            return list; 
+                foreach (var item in categories)
+                {
+                    list.Add(Convertir(item));
+                }
+                _logger.LogInformation("Antes de return CatService GetAll");
+                return list;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                throw;
+            }
+            
         }
     }
 }
