@@ -12,17 +12,19 @@ namespace BackEnd.Controllers
     public class CategoryController : ControllerBase
     {
         ICategoryService categoryService;
+        ILogger<CategoryController> _logger; 
 
-        public CategoryController(ICategoryService categoryService)
+        public CategoryController(ICategoryService categoryService, ILogger<CategoryController> logger)
         {
             this.categoryService = categoryService;
+            _logger = logger;   
         }
 
         // GET: api/<CategoryController>
         [HttpGet]
         public IEnumerable<CategoryDTO> Get()
         {
-
+            _logger.LogDebug("Consulta de todas las categorías");
 
             return categoryService.Obtener();
         }
