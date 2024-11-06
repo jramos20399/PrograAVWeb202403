@@ -4,6 +4,7 @@ using DAL.Implementations;
 using DAL.Interfaces;
 using Entities.Entities;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,17 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+#region BD
+
+
+builder.Services.AddDbContext<NorthWindContext>(options =>
+                    options.UseSqlServer(
+                        builder
+                        .Configuration
+                        .GetConnectionString("DefaulConnection")
+                        ));
+#endregion
 
 #region DI
 builder.Services.AddDbContext<NorthWindContext>();
