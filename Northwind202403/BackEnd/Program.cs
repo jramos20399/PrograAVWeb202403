@@ -3,6 +3,7 @@ using BackEnd.Services.Interfaces;
 using DAL.Implementations;
 using DAL.Interfaces;
 using Entities.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -32,6 +33,33 @@ builder.Services.AddDbContext<AuthDBContext>(options =>
                         .Configuration
                         .GetConnectionString("DefaulConnection")
                         ));
+#endregion
+
+#region Identity
+
+
+builder.Services.AddIdentityCore<IdentityUser>()
+             .AddRoles<IdentityRole>()
+            .AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>("fide")
+            .AddEntityFrameworkStores<AuthDBContext>()
+            .AddDefaultTokenProviders();
+
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequiredLength = 5;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireUppercase = false;
+
+});
+#endregion
+
+#region  JWT
+builder.Services.AddAuthentication();
+    
+
 #endregion
 
 #region Serilog
@@ -72,6 +100,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseMiddleware<ApiKeyManager>();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
