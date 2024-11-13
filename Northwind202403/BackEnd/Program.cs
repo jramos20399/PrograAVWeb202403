@@ -25,11 +25,18 @@ builder.Services.AddDbContext<NorthWindContext>(options =>
                         .Configuration
                         .GetConnectionString("DefaulConnection")
                         ));
+
+builder.Services.AddDbContext<AuthDBContext>(options =>
+                    options.UseSqlServer(
+                        builder
+                        .Configuration
+                        .GetConnectionString("DefaulConnection")
+                        ));
 #endregion
 
 #region Serilog
 
-    builder.Logging.ClearProviders();
+builder.Logging.ClearProviders();
     builder.Logging.AddConsole();
     builder.Host.UseSerilog((ctx, lc)=> lc
                                 .WriteTo
