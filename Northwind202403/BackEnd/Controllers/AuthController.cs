@@ -23,7 +23,34 @@ namespace BackEnd.Controllers
             this.TokenService = tokenService;
         }
 
+        [HttpPost]
+        [Route("login")]
+        public async Task<IActionResult> Login([FromBody] LoginModel model)
+        {
 
+
+            IdentityUser user = await userManager.FindByNameAsync(model.Username);
+            LoginModel Usuario = new LoginModel();
+            if (user != null && await userManager.CheckPasswordAsync(user, model.Password))
+            {
+
+                var userRoles = await userManager.GetRolesAsync(user);
+
+                var jwtToken = TokenService.CreateToken(user, userRoles.ToList());
+
+                Usuario.Token = jwtToken;
+                Usuario.Roles = userRoles.ToList();
+                Usuario.Username = user.UserName;
+
+
+                return Ok(Usuario);
+            }
+
+            return Unauthorized();
+
+
+
+        }
 
 
 
