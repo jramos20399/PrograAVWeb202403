@@ -2,6 +2,7 @@
 using FrontEnd.Helpers.Interfaces;
 using FrontEnd.Models;
 using Newtonsoft.Json;
+using NuGet.Common;
 using System.ComponentModel;
 
 namespace FrontEnd.Helpers.Implementations
@@ -9,6 +10,8 @@ namespace FrontEnd.Helpers.Implementations
     public class CategoryHelper : ICategoryHelper
     {
         IServiceRepository _ServiceRepository;
+
+        public string Token { get; set; }
 
         Category Convertir(CategoryViewModel category)
         {
@@ -46,6 +49,9 @@ namespace FrontEnd.Helpers.Implementations
 
         public List<CategoryViewModel> GetCategories()
         {
+
+            _ServiceRepository.Client.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Token);
             HttpResponseMessage responseMessage = _ServiceRepository.GetResponse("api/Category");
             List<Category> categories = new List<Category>();
             if (responseMessage != null)

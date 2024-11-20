@@ -17,6 +17,7 @@ namespace FrontEnd.Controllers
         // GET: CategoryController
         public ActionResult Index()
         {
+            _categoryHelper.Token = HttpContext.Session.GetString("token");
             var lista = _categoryHelper.GetCategories();
             return View(lista);
         }

@@ -19,7 +19,10 @@ namespace FrontEnd.Controllers
 
         public IActionResult Login(string ReturnUrl = "/")
         {
-            return View();
+            UserViewModel user = new UserViewModel();
+            user.ReturnUrl = ReturnUrl;
+
+            return View(user);
         }
 
         [HttpPost]
@@ -33,7 +36,7 @@ namespace FrontEnd.Controllers
                     TokenAPI tokenAPI = loging.Token;
                     var EsValido = false;
 
-                    if (tokenAPI == null) {
+                    if (tokenAPI != null) {
                         HttpContext.Session.SetString("token", tokenAPI.Token);
                         EsValido = true;
                     }
