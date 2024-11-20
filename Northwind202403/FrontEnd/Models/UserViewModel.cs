@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Reflection.Metadata.Ecma335;
 
 namespace FrontEnd.Models
 {
@@ -10,5 +11,10 @@ namespace FrontEnd.Models
 
         [DataType(DataType.Password)]
         public string Password { get; set; }
+
+
+        public bool RememberLogin { get; set; }
+
+        public string ReturnUrl { get; set; }
     }
 }
