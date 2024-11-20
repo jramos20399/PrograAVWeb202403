@@ -12,7 +12,7 @@ namespace FrontEnd.Controllers
                 this.securityHelper = securityHelper;
         }
 
-        public IActionResult Login()
+        public IActionResult Login(string ReturnUrl = "/")
         {
             return View();
         }
