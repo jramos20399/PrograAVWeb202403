@@ -111,6 +111,15 @@ builder.Services.AddScoped<ISupplierService, SupplierService>();
 builder.Services.AddScoped<ITokenService, TokenService>();  
 
 
+builder.Services.AddSingleton<ISingleton, ImplClass>();
+builder.Services.AddScoped<IScope, ImplClass>();
+builder.Services.AddTransient<ITransient, ImplClass>();
+
+
+
+
+
+
 #endregion
 
 
@@ -123,7 +132,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
     app.UseSwaggerUI();
 }
 
-app.UseMiddleware<ApiKeyManager>();
+//app.UseMiddleware<ApiKeyManager>();
 
 app.UseAuthentication();
 app.UseAuthorization();

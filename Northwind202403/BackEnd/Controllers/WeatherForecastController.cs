@@ -1,3 +1,5 @@
+using BackEnd.DTO;
+using BackEnd.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BackEnd.Controllers
@@ -6,28 +8,39 @@ namespace BackEnd.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+     
+        ISingleton _singleton;
 
-        private readonly ILogger<WeatherForecastController> _logger;
+        IScope _scope;
+        IScope _scope2;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        ITransient _transient;
+        ITransient _transient2;
+      
+        public WeatherForecastController(ISingleton singleton,
+            IScope scope, ITransient transient, IScope scope2, ITransient transient2)
         {
-            _logger = logger;
+            _singleton = singleton;
+            _scope = scope;
+            _transient = transient;
+            _scope2 = scope2;
+            _transient2 = transient2    ;
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
+        public IActionResult Get()
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            var response = new ResponseDTO
             {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+                SingletonValue = _singleton.Value,
+                ScopeValue = _scope.Value,
+                ScopeValue2 = _scope2.Value,
+                TransientValue = _transient.Value,
+                               TransientValue2 = _transient2.Value
+
+                
+            };
+            return Ok(response);
         }
     }
 }
